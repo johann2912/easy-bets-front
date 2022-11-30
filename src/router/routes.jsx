@@ -1,9 +1,10 @@
+import { Dashboard } from '../pages/dashboard/Dashboard';
 import { Login } from '../pages/login/Login';
-// import { Dashboard } from '../pages/dashboard/Dashboard';
 
 export const login = '/';
 export const register = '/register';
 export const dashboard = '/dashboard';
+export const roulettes = '/dashboard/roulettes';
 
 export const publicRoutes = [
   {
@@ -14,12 +15,16 @@ export const publicRoutes = [
     route: register,
     component: Login,
   },
+  {
+    route: dashboard,
+    component: Dashboard,
+    end: true,
+  },
+  {
+    route: roulettes,
+    component: Dashboard,
+    end: true,
+  },
 ];
 
-export const privateRoutes = [
-  // {
-  //   route: dashboard,
-  //   component: Dashboard,
-  //   end: true,
-  // },
-];
+export const privateRoutes = [];

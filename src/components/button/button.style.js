@@ -8,7 +8,7 @@ export const BtnWrap = styled.button`
   box-sizing: border-box;
   gap: 0.5rem;
   font-size: ${({ fontSize }) => (fontSize ? fontSize : '1rem')};
-  width: max-content;
+  width: ${({ width }) => (width ? width : 'max-content')};
   height: min-content;
   padding: ${({ padding }) => (padding ? padding : '.5rem 1rem')};
   color: white;
