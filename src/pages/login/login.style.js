@@ -19,10 +19,9 @@ export const InternWrapper = styled.div`
   box-sizing: border-box;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   gap: 5rem;
   width: min-content;
-  height: min-content;
+  height: 90vh;
   padding: 1rem;
 `;
 
