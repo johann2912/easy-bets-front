@@ -3,12 +3,15 @@ import 'aos/dist/aos.css';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { AiFillCloseCircle } from 'react-icons/ai';
+import { useDispatch } from 'react-redux';
+import { createRoulette } from '../../../../api/services/roulettes';
 import { Button } from '../../../../components/button/Button';
 import { FormField } from '../../../../components/field/Field';
 import { errorAlert, successAlert } from '../../../../utils/alerts';
 import * as SC from './modalForRoulette.style';
 
 export const ModalForRoulette = ({ closeModal }) => {
+  const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
 
   useEffect(() => {
@@ -16,8 +19,15 @@ export const ModalForRoulette = ({ closeModal }) => {
   }, []);
 
   const sendUserInfo = (data) => {
-    const dataToCreate = { data, successAlert, errorAlert };
-    console.log('dataToCreate =>', dataToCreate);
+    const { name, minimum_bet_balance, number_min, number_max, quota } = data;
+    const createRouletteData = {
+      name,
+      minimum_bet_balance: parseInt(minimum_bet_balance),
+      number_min: parseInt(number_min),
+      number_max: parseInt(number_max),
+      quota: parseInt(quota),
+    };
+    dispatch(createRoulette(createRouletteData));
     closeModal();
   };
 
@@ -42,19 +52,19 @@ export const ModalForRoulette = ({ closeModal }) => {
               desc="Saldo mínimo"
               type="number"
               register={register}
-              regName="minimunBalance"
+              regName="minimum_bet_balance"
             />
             <FormField
               desc="Número mínimo"
               type="number"
               register={register}
-              regName="minNumber"
+              regName="number_min"
             />
             <FormField
               desc="Número maximo"
               type="number"
               register={register}
-              regName="maxNumber"
+              regName="number_max"
             />
             <FormField
               desc="Cuota"
