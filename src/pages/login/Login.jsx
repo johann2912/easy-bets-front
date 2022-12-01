@@ -1,12 +1,11 @@
 import { useContext } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Link, useLocation } from 'react-router-dom';
-import { loginService } from '../../api/services/auth';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { loginService, registerService } from '../../api/services/auth';
 import { Button } from '../../components/button/Button';
 import { FormField } from '../../components/field/Field';
 import { Toast } from '../../components/toast/Toast';
 import { SessionContext } from '../../context/sessionContext';
-import { login } from '../../router/routes';
 import { errorAlert, successAlert } from '../../utils/alerts';
 import {
   DocTypesOptions,
@@ -15,21 +14,36 @@ import {
 import * as SC from './login.style';
 
 export const Login = () => {
+  let Navigate = useNavigate();
   let { pathname } = useLocation();
   const { login } = useContext(SessionContext);
   const { register, control, handleSubmit } = useForm();
 
   const onSubmit = async (data) => {
-    const { emailLogin, passwordLogin } = data;
-    const { loginStatus, userInfo } = await loginService(
-      emailLogin,
-      passwordLogin
-    );
-    login(loginStatus, userInfo);
-    try {
-      successAlert('Bienvenido!');
-    } catch (error) {
-      errorAlert('Credenciales incorrectas!');
+    if (pathname !== '/register') {
+      const { emailLogin, passwordLogin } = data;
+      const { loginStatus, userInfo } = await loginService(
+        emailLogin,
+        passwordLogin
+      );
+      login(loginStatus, userInfo);
+    } else {
+      const dataToRegister = {
+        nick_name: data.nick_name,
+        document_number: data.document_number,
+        document_type: data.document_type.value,
+        email: data.email,
+        password: data.password,
+        user_type: data.user_type.value,
+      };
+      await registerService({
+        dataToCreateUser: dataToRegister,
+        successAlert,
+        errorAlert,
+      });
+      setTimeout(() => {
+        Navigate('/');
+      }, 20000);
     }
   };
 
@@ -70,18 +84,18 @@ export const Login = () => {
                     desc="Nick"
                     type="text"
                     register={register}
-                    regName="nick"
+                    regName="nick_name"
                   />
                   <FormField
                     desc="Número documento"
                     type="number"
                     register={register}
-                    regName="docNumber"
+                    regName="document_number"
                   />
                   <FormField
                     desc="Tipo documento"
                     Controller={Controller}
-                    contName="documentType"
+                    contName="document_type"
                     control={control}
                     options={DocTypesOptions}
                   />
@@ -100,7 +114,7 @@ export const Login = () => {
                   <FormField
                     desc="Tipo usuario"
                     Controller={Controller}
-                    contName="userType"
+                    contName="user_type"
                     control={control}
                     options={userTypesOptions}
                   />
