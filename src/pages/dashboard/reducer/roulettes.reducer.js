@@ -2,13 +2,16 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   createRoulette,
   deleteRoulette,
+  getAllRouletteResults,
   getAllRoulettes,
 } from '../../../api/services/roulettes';
 
 const initialState = {
   rouletteId: '',
   roulettesList: [],
+  rouletteResults: [],
   loadingRoulettes: false,
+  loadingRouletteResults: false,
 };
 
 export const rouletteSlice = createSlice({
@@ -28,6 +31,15 @@ export const rouletteSlice = createSlice({
         state.loadingRoulettes = false;
         if (payload !== undefined) {
           state.roulettesList = payload;
+        }
+      })
+      .addCase(getAllRouletteResults.pending, (state) => {
+        state.loadingRouletteResults = true;
+      })
+      .addCase(getAllRouletteResults.fulfilled, (state, { payload }) => {
+        state.loadingRouletteResults = false;
+        if (payload !== undefined) {
+          state.rouletteResults = payload;
         }
       })
       .addCase(createRoulette.pending, (state) => {

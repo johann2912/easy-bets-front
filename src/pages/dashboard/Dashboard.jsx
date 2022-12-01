@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { deleteRoulette, getAllRoulettes } from '../../api/services/roulettes';
 import { Button } from '../../components/button/Button';
+import { SideBar } from '../../components/sideBar/SideBar';
+import { Toast } from '../../components/toast/Toast';
 import { SessionContext } from '../../context/sessionContext';
 import { ModalCustomStyles } from '../../styles/customStyles';
 import { ModalForRoulette } from './components/ModalForRoulette/ModalForRoulette';
@@ -38,7 +40,7 @@ export const Dashboard = () => {
   }, []);
 
   return (
-    <SC.MainWrapper>
+    <>
       <Modal
         isOpen={showModalToAdd}
         onRequestClose={closeModalToAdd}
@@ -47,23 +49,6 @@ export const Dashboard = () => {
       >
         <ModalForRoulette closeModal={closeModalToAdd} />
       </Modal>
-      <SC.LeftWrapper>
-        <SC.VisualsWrapper>
-          <SC.ApptNameWrapper>APUESTA FACIL</SC.ApptNameWrapper>
-          <SC.InteractionsWrapper>
-            <Button onClick={() => navigate('/dashboard/roulettes')}>
-              RULETAS
-            </Button>
-            <Button>ADQUIRIR CREDITOS</Button>
-            <Button>HISTORIAL DE APUESTAS</Button>
-          </SC.InteractionsWrapper>
-          <SC.LogoutWrapper>
-            <Button bgColor={'#D50000'} onClick={logout}>
-              Cerrar sesión
-            </Button>
-          </SC.LogoutWrapper>
-        </SC.VisualsWrapper>
-      </SC.LeftWrapper>
       <SC.RightWrapper>
         <SC.SearchRoulettesExternalWrapper>
           <span>RULETAS</span>
@@ -95,7 +80,13 @@ export const Dashboard = () => {
                       >
                         Eliminar
                       </Button>
-                      <Button bgColor={'#1B5E20'} width="110px">
+                      <Button
+                        bgColor={'#1B5E20'}
+                        width="110px"
+                        onClick={() =>
+                          navigate(`/dashboard/roulettes/${id}/results`)
+                        }
+                      >
                         Resultados
                       </Button>
                       <Button bgColor={'#1976D2'} width="110px">
@@ -110,6 +101,7 @@ export const Dashboard = () => {
           )}
         </SC.RoulettesListExternalWrapper>
       </SC.RightWrapper>
-    </SC.MainWrapper>
+      <Toast />
+    </>
   );
 };

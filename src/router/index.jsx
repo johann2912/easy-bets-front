@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { SideBar } from '../components/sideBar/SideBar';
 import Context from '../context/sessionContext';
 import { MainWrapper } from '../styles/mainStyles';
 import { PrivateRoute } from './PrivateRoute';
@@ -33,12 +34,15 @@ const AppRouter = () => {
                       key={idx}
                       path={route}
                       element={
-                        <PrivateRoute
-                          key={idx}
-                          path={route}
-                          element={component}
-                          isLoggedIn={isLoggedIn}
-                        />
+                        <>
+                          <SideBar />
+                          <PrivateRoute
+                            key={idx}
+                            path={route}
+                            element={component}
+                            isLoggedIn={isLoggedIn}
+                          />
+                        </>
                       }
                     />
                   ))}

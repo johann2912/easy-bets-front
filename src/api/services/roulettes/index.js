@@ -17,6 +17,20 @@ export const getAllRoulettes = createAsyncThunk(
   }
 );
 
+export const getAllRouletteResults = createAsyncThunk(
+  'roulettes/getAllRouletteResults',
+  async (rouletteId) => {
+    const url = `${apiUrl}/all-results/${rouletteId}`;
+    try {
+      const res = await axios.get(url);
+      return res.data;
+    } catch (err) {
+      err.response.status !== 404 &&
+        errorAlert('Error al solicitar las resultados existentes!');
+    }
+  }
+);
+
 export const createRoulette = createAsyncThunk(
   'roulettes/createRoulette',
   async (createRouletteData) => {
