@@ -1,16 +1,17 @@
 import { useState } from 'react';
-import { setToken, getToken, clearToken } from '../api/localStorage';
 
 const useToken = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(!!getToken());
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('login'));
 
-  const login = (token) => {
-    setToken(token);
+  const login = (login, user) => {
+    localStorage.setItem('login', login);
+    localStorage.setItem('user', JSON.stringify(user));
     setIsLoggedIn(true);
   };
 
   const logout = async () => {
-    clearToken();
+    localStorage.removeItem('login');
+    localStorage.removeItem('user');
     setIsLoggedIn(false);
   };
 

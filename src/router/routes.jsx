@@ -15,6 +15,9 @@ export const publicRoutes = [
     route: register,
     component: Login,
   },
+];
+
+export const privateRoutes = [
   {
     route: dashboard,
     component: Dashboard,
@@ -26,5 +29,3 @@ export const publicRoutes = [
     end: true,
   },
 ];
-
-export const privateRoutes = [];

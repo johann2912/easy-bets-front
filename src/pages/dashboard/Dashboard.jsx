@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../../components/button/Button';
+import { SessionContext } from '../../context/sessionContext';
 import { ModalCustomStyles } from '../../styles/customStyles';
 import { ModalForRoulette } from './components/ModalForRoulette/ModalForRoulette';
 import { SearchBar } from './components/SearchBar/SearchBar';
@@ -12,6 +13,7 @@ Modal.setAppElement('#root');
 
 export const Dashboard = () => {
   const navigate = useNavigate();
+  const { logout } = useContext(SessionContext);
   const [filterText, setFilterText] = useState('');
   const [showModalToAdd, setShowModalToAdd] = useState(false);
 
@@ -44,7 +46,9 @@ export const Dashboard = () => {
             <Button>HISTORIAL DE APUESTAS</Button>
           </SC.InteractionsWrapper>
           <SC.LogoutWrapper>
-            <Button bgColor={'#D50000'}>Cerrar sesión</Button>
+            <Button bgColor={'#D50000'} onClick={logout}>
+              Cerrar sesión
+            </Button>
           </SC.LogoutWrapper>
         </SC.VisualsWrapper>
       </SC.LeftWrapper>

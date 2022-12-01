@@ -1,8 +1,12 @@
+import { useContext } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Link, useLocation } from 'react-router-dom';
+import { loginService } from '../../api/services/auth';
 import { Button } from '../../components/button/Button';
 import { FormField } from '../../components/field/Field';
 import { Toast } from '../../components/toast/Toast';
+import { SessionContext } from '../../context/sessionContext';
+import { login } from '../../router/routes';
 import { errorAlert, successAlert } from '../../utils/alerts';
 import {
   DocTypesOptions,
@@ -12,11 +16,16 @@ import * as SC from './login.style';
 
 export const Login = () => {
   let { pathname } = useLocation();
+  const { login } = useContext(SessionContext);
   const { register, control, handleSubmit } = useForm();
 
   const onSubmit = async (data) => {
-    console.log('data =>', data);
-
+    const { emailLogin, passwordLogin } = data;
+    const { loginStatus, userInfo } = await loginService(
+      emailLogin,
+      passwordLogin
+    );
+    login(loginStatus, userInfo);
     try {
       successAlert('Bienvenido!');
     } catch (error) {
@@ -40,13 +49,13 @@ export const Login = () => {
                     desc="Correo"
                     type="email"
                     register={register}
-                    regName="email-login"
+                    regName="emailLogin"
                   />
                   <FormField
                     desc="Contraseña"
                     type="password"
                     register={register}
-                    regName="password-login"
+                    regName="passwordLogin"
                   />
                 </SC.InputGroup>
                 <Button type="submit">INICIAR SESIÓN</Button>
