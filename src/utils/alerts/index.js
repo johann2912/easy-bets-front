@@ -1,5 +1,16 @@
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 
-export const successAlert = (message) => toast.success(message);
-export const errorAlert = (message) => toast.error(message);
-export const loadingAlert = (message) => toast.loading(message);
+export const successAlert = (message) =>
+  toast.success(message, {
+    theme: 'colored',
+  });
+
+export const errorAlert = (message) =>
+  toast.error(message, {
+    theme: 'colored',
+  });
+
+export const infoAlert = (message) =>
+  toast.info(message, {
+    theme: 'colored',
+  });

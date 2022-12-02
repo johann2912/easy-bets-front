@@ -1,19 +1,17 @@
-import React from 'react';
-import { Toaster } from 'react-hot-toast';
+import { ToastContainer } from 'react-toastify';
 
 export const Toast = () => {
   return (
-    <Toaster
-      toastOptions={{
-        style: {
-          width: '500px',
-          textAlign: 'center',
-          background: '#282f3f',
-          color: 'white',
-          transition: 'all 0.1s ease-out',
-        },
-      }}
-      position="bottom-center"
+    <ToastContainer
+      position="top-right"
+      autoClose={2000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
     />
   );
 };

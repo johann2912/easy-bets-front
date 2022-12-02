@@ -38,9 +38,10 @@ export const ResultsListExternalWrapper = styled.div`
 
 export const ResultCardWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   box-sizing: border-box;
   padding: 1rem 2rem;
+  gap: 1rem;
   width: 100%;
   color: white;
   font-size: 1rem;
@@ -50,5 +51,11 @@ export const ResultCardWrapper = styled.div`
   box-shadow: 3px 3px 8px #00000080;
   > div > span {
     font-weight: 500;
+  }
+  @media (max-width: 1200px) {
+    font-size: 0.8rem;
+  }
+  @media (min-width: 2000px) {
+    font-size: 1rem;
   }
 `;

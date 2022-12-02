@@ -15,9 +15,11 @@ export const SideBar = () => {
           <Button onClick={() => navigate('/dashboard/roulettes')}>
             RULETAS
           </Button>
-          <Button onClick={() => navigate('/dashboard/adquire-credits')}>
-            ADQUIRIR CREDITOS
-          </Button>
+          {localStorage.getItem('userType') === '1' && (
+            <Button onClick={() => navigate('/dashboard/adquire-credits')}>
+              ADQUIRIR CREDITOS
+            </Button>
+          )}
         </SC.InteractionsWrapper>
         <SC.LogoutWrapper>
           <Button bgColor={'#D50000'} onClick={logout}>

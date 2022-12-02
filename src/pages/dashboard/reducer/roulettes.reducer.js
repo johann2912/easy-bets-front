@@ -4,12 +4,18 @@ import {
   deleteRoulette,
   getAllRouletteResults,
   getAllRoulettes,
+  getRouletteById,
+  runnedRoulette,
 } from '../../../api/services/roulettes';
 
 const initialState = {
+  result: null,
   rouletteId: '',
+  currentRoulete: null,
   roulettesList: [],
   rouletteResults: [],
+  loadingResult: false,
+  loadingRoulette: false,
   loadingRoulettes: false,
   loadingRouletteResults: false,
 };
@@ -20,6 +26,9 @@ export const rouletteSlice = createSlice({
   reducers: {
     setRouletteId: (state, { payload }) => {
       state.rouletteId = payload;
+    },
+    clearResult: (state, { payload }) => {
+      state.result = payload;
     },
   },
   extraReducers(builder) {
@@ -33,6 +42,15 @@ export const rouletteSlice = createSlice({
           state.roulettesList = payload;
         }
       })
+      .addCase(getRouletteById.pending, (state) => {
+        state.loadingRoulette = true;
+      })
+      .addCase(getRouletteById.fulfilled, (state, { payload }) => {
+        state.loadingRoulette = false;
+        if (payload !== undefined) {
+          state.currentRoulete = payload;
+        }
+      })
       .addCase(getAllRouletteResults.pending, (state) => {
         state.loadingRouletteResults = true;
       })
@@ -40,6 +58,15 @@ export const rouletteSlice = createSlice({
         state.loadingRouletteResults = false;
         if (payload !== undefined) {
           state.rouletteResults = payload;
+        }
+      })
+      .addCase(runnedRoulette.pending, (state) => {
+        state.loadingResult = true;
+      })
+      .addCase(runnedRoulette.fulfilled, (state, { payload }) => {
+        state.loadingResult = false;
+        if (payload !== undefined) {
+          state.result = payload;
         }
       })
       .addCase(createRoulette.pending, (state) => {
@@ -66,5 +93,5 @@ export const rouletteSlice = createSlice({
 });
 
 export const getRouletteSelector = (state) => state.roulettes;
-export const { setRouletteId } = rouletteSlice.actions;
+export const { setRouletteId, clearResult } = rouletteSlice.actions;
 export default rouletteSlice.reducer;

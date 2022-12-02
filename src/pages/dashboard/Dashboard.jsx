@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { deleteRoulette, getAllRoulettes } from '../../api/services/roulettes';
 import { Button } from '../../components/button/Button';
-import { SideBar } from '../../components/sideBar/SideBar';
 import { Toast } from '../../components/toast/Toast';
 import { SessionContext } from '../../context/sessionContext';
 import { ModalCustomStyles } from '../../styles/customStyles';
@@ -53,7 +52,9 @@ export const Dashboard = () => {
         <SC.SearchRoulettesExternalWrapper>
           <span>RULETAS</span>
           <SC.SearchRoulettesInteractionsWrapper>
-            <Button onClick={openModalToAdd}>Agregar</Button>
+            {localStorage.getItem('userType') === '0' && (
+              <Button onClick={openModalToAdd}>Agregar</Button>
+            )}
             <SearchBar filterText={filterText} setFilterText={setFilterText} />
           </SC.SearchRoulettesInteractionsWrapper>
         </SC.SearchRoulettesExternalWrapper>
@@ -73,13 +74,15 @@ export const Dashboard = () => {
                       </SC.MinimumBalanceWrapper>
                     </SC.RouletteCardInfoWrapper>
                     <SC.RouletteCardInteractsWrapper>
-                      <Button
-                        bgColor={'#D50000'}
-                        width="110px"
-                        onClick={() => deleteRouletteProcess(id)}
-                      >
-                        Eliminar
-                      </Button>
+                      {localStorage.getItem('userType') === '0' && (
+                        <Button
+                          bgColor={'#D50000'}
+                          width="110px"
+                          onClick={() => deleteRouletteProcess(id)}
+                        >
+                          Eliminar
+                        </Button>
+                      )}
                       <Button
                         bgColor={'#1B5E20'}
                         width="110px"
@@ -89,9 +92,17 @@ export const Dashboard = () => {
                       >
                         Resultados
                       </Button>
-                      <Button bgColor={'#1976D2'} width="110px">
-                        Jugar
-                      </Button>
+                      {localStorage.getItem('userType') === '1' && (
+                        <Button
+                          bgColor={'#1976D2'}
+                          width="110px"
+                          onClick={() =>
+                            navigate(`/dashboard/roulettes/${id}/play`)
+                          }
+                        >
+                          Jugar
+                        </Button>
+                      )}
                     </SC.RouletteCardInteractsWrapper>
                   </SC.RouletteCardExtWrapper>
                 ))}

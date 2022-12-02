@@ -17,6 +17,20 @@ export const getAllRoulettes = createAsyncThunk(
   }
 );
 
+export const getRouletteById = createAsyncThunk(
+  'roulettes/getRouletteById',
+  async (rouletteId) => {
+    const url = `${apiUrl}/id/${rouletteId}`;
+    try {
+      const res = await axios.get(url);
+      return res.data;
+    } catch (err) {
+      err.response.status !== 404 &&
+        errorAlert('Error al solicitar la ruleta en cuestion!');
+    }
+  }
+);
+
 export const getAllRouletteResults = createAsyncThunk(
   'roulettes/getAllRouletteResults',
   async (rouletteId) => {
@@ -27,6 +41,23 @@ export const getAllRouletteResults = createAsyncThunk(
     } catch (err) {
       err.response.status !== 404 &&
         errorAlert('Error al solicitar las resultados existentes!');
+    }
+  }
+);
+
+export const runnedRoulette = createAsyncThunk(
+  'roulettes/runnedRoulette',
+  async ({ rouletteId, playNumber }) => {
+    const url = `${apiUrl}/running-game/${rouletteId}`;
+    try {
+      const res = await axios.get(url);
+      playNumber === res.data.result
+        ? successAlert('Has ganado, felicidades!')
+        : errorAlert('Has perdido, lo sentimos!');
+      return res.data.result;
+    } catch (err) {
+      errorAlert('Error al solicitar el resultado!');
+      console.log(err);
     }
   }
 );
