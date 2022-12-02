@@ -8,6 +8,7 @@ export const Button = ({
   padding,
   type,
   onClick,
+  disabled,
 }) => {
   return (
     <SC.BtnWrap
@@ -17,6 +18,7 @@ export const Button = ({
       padding={padding}
       fontSize={fontSize}
       onClick={onClick}
+      disabled={disabled}
     >
       {children}
     </SC.BtnWrap>

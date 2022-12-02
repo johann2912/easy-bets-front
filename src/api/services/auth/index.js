@@ -1,4 +1,7 @@
 import axios from 'axios';
+import { errorAlert, successAlert } from '../../../utils/alerts';
+
+const apiUrl = process.env.REACT_APP_USER;
 
 export const loginService = async (gmail, password) => {
   const url = `${process.env.REACT_APP_USER}/login/${gmail}/${password}`;
@@ -19,5 +22,16 @@ export const registerService = async ({
   } catch (err) {
     console.log(err);
     errorAlert('Error al registrar el usuario!');
+  }
+};
+
+export const adquireCredits = async ({ adquireCreditsData }) => {
+  const url = `${apiUrl}/acquire-credits/${localStorage.getItem('docUser')}`;
+  try {
+    await axios.post(url, adquireCreditsData);
+    successAlert(`Compra exitosa!`);
+  } catch (err) {
+    console.log(err);
+    errorAlert('Error al realizar la compra');
   }
 };
